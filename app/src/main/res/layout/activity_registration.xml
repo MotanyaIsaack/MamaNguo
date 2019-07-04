@@ -19,7 +19,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.195"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +36,8 @@
             android:id="@+id/textInputEditTextFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="FIRSTNAME" />
+            android:hint="FIRSTNAME"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -56,8 +56,8 @@
             android:id="@+id/textInputEditTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="EMAIL" />
+            android:hint="EMAIL"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -68,6 +68,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEmail"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textInputLayoutFirstName"
         app:layout_constraintTop_toBottomOf="@+id/textViewRegister">
 
@@ -75,8 +76,8 @@
             android:id="@+id/textInputEditTextLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="LASTNAME" />
+            android:hint="LASTNAME"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -95,8 +96,8 @@
             android:id="@+id/textInputEditTextMobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="MOBILE NUMBER" />
+            android:hint="MOBILE NUMBER"
+            android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,7 +106,7 @@
         android:layout_width="173dp"
         android:layout_height="56dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutLocation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,8 +117,8 @@
             android:id="@+id/textInputEditTextIDNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="ID NUMBER" />
+            android:hint="ID NUMBER"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +129,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayoutPassword"
-        app:layout_constraintHorizontal_bias="0.577"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/material_text_button_signup"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobileNumber">
 
@@ -136,8 +137,8 @@
             android:id="@+id/textInputEditTextLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="LOCATION" />
+            android:hint="LOCATION"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -156,8 +157,8 @@
             android:id="@+id/textInputEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="PASSWORD" />
+            android:hint="PASSWORD"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
