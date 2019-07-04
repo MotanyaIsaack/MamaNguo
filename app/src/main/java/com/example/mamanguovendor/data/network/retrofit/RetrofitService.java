@@ -10,4 +10,7 @@ import retrofit2.http.POST;
 public interface RetrofitService {
     @POST("login")
     Call<UserClass> login(@Body JsonObject jsonObject);
+
+    @POST("register")
+    Call<UserClass> signup(@Body JsonObject jsonObject);
 }

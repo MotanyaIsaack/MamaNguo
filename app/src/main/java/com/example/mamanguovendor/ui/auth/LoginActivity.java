@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mamanguovendor.R;
 import com.example.mamanguovendor.data.models.UserClass;
-import com.example.mamanguovendor.ui.requests.RequestsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -71,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Authorisation Failed", Toast.LENGTH_SHORT).show();
                 }else {
                     Log.d(LOG_TAG, userClass.getToken());
-//                    Intent intent = new Intent(LoginActivity.this, RequestsActivity.class);
+//                    Intent intent = new Intent(LoginActivity.this, Navigation_activity.class);
 //                    intent.putExtra("userdata")
                     Toast.makeText(LoginActivity.this, userClass.getToken(), Toast.LENGTH_SHORT).show();
                 }

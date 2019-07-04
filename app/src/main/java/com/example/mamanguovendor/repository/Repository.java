@@ -65,4 +65,45 @@ public class Repository {
 
         return user;
     }
+
+    public LiveData<UserClass> signup(String firstName, String lastName, String email,
+                                      String mobileNo, String idNo, String location,
+                                      String password) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("firstName", firstName);
+        jsonObject.addProperty("lastName", lastName);
+        jsonObject.addProperty("email", email);
+        jsonObject.addProperty("phoneNumber", mobileNo);
+        jsonObject.addProperty("idNumber", idNo);
+        jsonObject.addProperty("location", location);
+        jsonObject.addProperty("password", password);
+
+        Call<UserClass> signupCall = retrofitService.signup(jsonObject);
+        signupCall.enqueue(new Callback<UserClass>() {
+            @Override
+            public void onResponse(Call<UserClass> call, Response<UserClass> response) {
+                Log.d(LOG_TAG, "onResponse: Success "+ response.body().getToken());
+                if (response.isSuccessful()) {
+                    Log.d(LOG_TAG, "Success: " + response.body().getToken());
+                    user.setValue(response.body());
+                } else {
+                    if (response.code() == 401) {
+                        user.setValue(null);
+                    }
+                    try {
+                        Log.d(LOG_TAG, "eRROR: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserClass> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return user;
+    }
 }

@@ -2,4 +2,10 @@
     <string name="app_name">MamaNguo</string>
     <string name="app_title">MAMA NGUO</string>
     <string name="imageviewsplash_contentdescription">applogo</string>
+    <string name="menu_requests">Requests</string>
+    <string name="menu_history">History</string>
+    <string name="menu_profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
