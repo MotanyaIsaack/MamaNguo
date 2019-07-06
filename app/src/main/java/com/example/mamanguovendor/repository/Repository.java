@@ -1,13 +1,17 @@
 package com.example.mamanguovendor.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitClient;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitService;
+import com.example.mamanguovendor.util.ApplicationContextProvider;
+import com.example.mamanguovendor.util.PreferenceUtils;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -20,10 +24,13 @@ public class Repository {
     private static final String LOG_TAG = Repository.class.getSimpleName();
     private static Repository instance;
     private final RetrofitService retrofitService;
+
     private MutableLiveData<UserClass> user = new MutableLiveData<>();
+    private MutableLiveData<Requests> requestsLiveData = new MutableLiveData<>();
 
     private Repository() {
-        this.retrofitService = RetrofitClient.getInstance().getRetrofitService();
+        retrofitService = RetrofitClient.getInstance().getRetrofitService();
+//        this.retrofitService = RetrofitClient.getInstance().getRetrofitService();
     }
 
     public static Repository getInstance() {
@@ -43,14 +50,19 @@ public class Repository {
             @Override
             public void onResponse(Call<UserClass> call, Response<UserClass> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     Log.d(LOG_TAG, "Success: " + response.body().getToken());
                     user.setValue(response.body());
+                    Context context = ApplicationContextProvider.getContext();
+                    PreferenceUtils.setUserToken(context, response.body().getToken());
+
                 } else {
                     if (response.code() == 401) {
                         user.setValue(null);
                     }
                     try {
                         Log.d(LOG_TAG, "eRROR: " + response.errorBody().string());
+                        user.setValue(null);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -82,10 +94,12 @@ public class Repository {
         signupCall.enqueue(new Callback<UserClass>() {
             @Override
             public void onResponse(Call<UserClass> call, Response<UserClass> response) {
-                Log.d(LOG_TAG, "onResponse: Success "+ response.body().getToken());
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     Log.d(LOG_TAG, "Success: " + response.body().getToken());
                     user.setValue(response.body());
+                    Context context = ApplicationContextProvider.getContext();
+                    PreferenceUtils.setUserToken(context, response.body().getToken());
                 } else {
                     if (response.code() == 401) {
                         user.setValue(null);
@@ -105,5 +119,28 @@ public class Repository {
         });
 
         return user;
+    }
+
+    public LiveData<Requests> request() {
+        String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
+        String authtoken = "Bearer ".concat(token);
+        Call<Requests> requestCall = retrofitService.request(authtoken);
+
+        requestCall.enqueue(new Callback<Requests>() {
+            @Override
+            public void onResponse(Call<Requests> call, Response<Requests> response) {
+                if (response.isSuccessful()) {
+                    Log.d(LOG_TAG, "Request returned: " +response.body().getFirstName());
+                    requestsLiveData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Requests> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return requestsLiveData;
     }
 }

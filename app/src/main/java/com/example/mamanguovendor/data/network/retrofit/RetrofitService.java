@@ -1,10 +1,13 @@
 package com.example.mamanguovendor.data.network.retrofit;
 
+import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface RetrofitService {
@@ -13,4 +16,7 @@ public interface RetrofitService {
 
     @POST("register")
     Call<UserClass> signup(@Body JsonObject jsonObject);
+
+    @GET("request")
+    Call<Requests> request(@Header("Authorization") String authToken);
 }

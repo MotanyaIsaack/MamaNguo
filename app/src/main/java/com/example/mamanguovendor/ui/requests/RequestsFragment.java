@@ -3,12 +3,14 @@ package com.example.mamanguovendor.ui.requests;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mamanguovendor.R;
 
@@ -68,6 +70,19 @@ public class RequestsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_requests, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        RequestsFragmentViewModel viewModel = ViewModelProviders.of(this)
+                .get(RequestsFragmentViewModel.class);
+
+        viewModel.getRequest().observe(this, requests -> {
+            Toast.makeText(getContext(), requests.getFirstName(), Toast.LENGTH_LONG)
+                    .show();
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

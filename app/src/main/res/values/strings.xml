@@ -8,4 +8,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_name">Invalid FirstName</string>
+    <string name="error_firstname">Invalid FirstName</string>
+    <string name="error_lastname">Invalid LastName</string>
+    <string name="error_email">Invalid Email</string>
+    <string name="error_password">Invalid Password</string>
+    <string name="error_mobileNo">Invalid Mobile No</string>
+    <string name="error_location">Invalid Location</string>
+    <string name="error_idno">Invalid ID Number</string>
+    <string name="preference_file_key">shared_prefs_file</string>
+    <string name="hello_history_fragment">Hello History</string>
+    <string name="demo_card_text">Demo Card Text</string>
+    <string name="card_title">I need your services</string>
+    <string name="card_content">Shirts: 5 \n Pants:5</string>
+    <string name="action_accept">ACCEPT</string>
+    <string name="action_cancel">CANCEL</string>
+    <string name="requests_title">Requests</string>
+    <string name="history_title">History</string>
+    <string name="profile_title">Requests</string>
+    <string name="action_complete">COMPLETE</string>
 </resources>
