@@ -19,4 +19,7 @@ public interface RetrofitService {
 
     @GET("request")
     Call<Requests> request(@Header("Authorization") String authToken);
+
+    @POST("cancelRequest")
+    Call<Requests> cancelRequest(@Header("Authorization") String authToken, @Body JsonObject jsonObject);
 }

@@ -2,9 +2,11 @@ package com.example.mamanguovendor.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mamanguovendor.R;
 import com.example.mamanguovendor.ui.components.Navigation_activity;
 import com.example.mamanguovendor.util.PreferenceUtils;
 
@@ -23,8 +25,16 @@ public class SplashActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Navigation_activity.class);
             startActivity(intent);
         } else {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
+            setContentView(R.layout.activity_splash);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }, 3000);
+
         }
     }
 }

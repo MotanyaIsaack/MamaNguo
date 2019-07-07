@@ -18,4 +18,8 @@ public class RequestsFragmentViewModel extends ViewModel {
         return repository.request();
     }
 
+    public LiveData<Requests> cancelRequest(String status){
+        return repository.cancelRequest(status);
+    }
+
 }

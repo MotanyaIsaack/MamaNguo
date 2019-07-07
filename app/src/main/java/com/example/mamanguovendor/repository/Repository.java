@@ -2,6 +2,7 @@ package com.example.mamanguovendor.repository;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -130,8 +131,18 @@ public class Repository {
             @Override
             public void onResponse(Call<Requests> call, Response<Requests> response) {
                 if (response.isSuccessful()) {
-                    Log.d(LOG_TAG, "Request returned: " +response.body().getFirstName());
-                    requestsLiveData.setValue(response.body());
+                        Log.d(LOG_TAG, "Request returned: " +response.body().getFirstName());
+                        requestsLiveData.setValue(null);
+                        requestsLiveData.setValue(response.body());
+                }else {
+                    if (response.code() == 404) {
+                        requestsLiveData.setValue(null);
+                    }
+                    try {
+                        Log.d(LOG_TAG, "eRROR: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -141,6 +152,32 @@ public class Repository {
             }
         });
 
+        return requestsLiveData;
+    }
+
+    public LiveData<Requests> cancelRequest(String status) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status",status);
+
+        String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
+        String authtoken = "Bearer ".concat(token);
+        Call<Requests> requestCall = retrofitService.cancelRequest(authtoken,jsonObject);
+        requestCall.enqueue(new Callback<Requests>() {
+            @Override
+            public void onResponse(Call<Requests> call, Response<Requests> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    Log.d(LOG_TAG, "onResponse: CancelResponse"+response.body().getMessage());
+
+//                    requestsLiveData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Requests> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
         return requestsLiveData;
     }
 }

@@ -19,12 +19,19 @@
     <string name="preference_file_key">shared_prefs_file</string>
     <string name="hello_history_fragment">Hello History</string>
     <string name="demo_card_text">Demo Card Text</string>
-    <string name="card_title">I need your services</string>
-    <string name="card_content">Shirts: 5 \n Pants:5</string>
+    <string name="card_title">needs your services</string>
+    <string name="card_content"></string>
     <string name="action_accept">ACCEPT</string>
     <string name="action_cancel">CANCEL</string>
     <string name="requests_title">Requests</string>
     <string name="history_title">History</string>
     <string name="profile_title">Requests</string>
     <string name="action_complete">COMPLETE</string>
+    <string name="request_name">Name:</string>
+    <string name="request_phoneNumber">Mobile :</string>
+    <string name="request_location">Location:</string>
+    <string name="request_title_items">Items</string>
+    <string name="request_title_quantity">Quantity</string>
+    <string name="request_totalCost">Total Cost:</string>
+    <string name="card_title_norequest">You Have No Request</string>
 </resources>

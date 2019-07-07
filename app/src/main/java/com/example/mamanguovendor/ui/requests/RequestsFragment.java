@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mamanguovendor.R;
+import com.google.android.material.button.MaterialButton;
+
+import static android.view.View.GONE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,9 @@ import com.example.mamanguovendor.R;
  * create an instance of this fragment.
  */
 public class RequestsFragment extends Fragment {
+
+    private RequestsFragmentViewModel viewModel;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,19 +77,74 @@ public class RequestsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        TextView firstName = container.findViewById(R.id.textView_request_name);
+
         return inflater.inflate(R.layout.fragment_requests, container, false);
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         RequestsFragmentViewModel viewModel = ViewModelProviders.of(this)
                 .get(RequestsFragmentViewModel.class);
 
         viewModel.getRequest().observe(this, requests -> {
-            Toast.makeText(getContext(), requests.getFirstName(), Toast.LENGTH_LONG)
-                    .show();
+            if (requests!=null){
+                String firstName = requests.getFirstName();
+                String lastName = requests.getLastName();
+                String phoneNumber = requests.getPhoneNumber();
+                String location = requests.getLocation();
+                String requestList = requests.getDescription();
+                Integer itotalCost = requests.getTotalCost();
+                String totalCost = itotalCost.toString();
+
+                TextView title = getActivity().findViewById(R.id.textView_request_title);
+                TextView name = getActivity().findViewById(R.id.textView_request_name);
+                TextView mobileNo = getActivity().findViewById(R.id.textView_request_phoneNumber);
+                TextView locationName = getActivity().findViewById(R.id.textView_request_location);
+                TextView request = getActivity().findViewById(R.id.textView_request_description);
+                TextView totalcost = getActivity().findViewById(R.id.textView_request_totalCost);
+
+                title.setText(firstName +" "+ title.getText().toString());
+                name.setText(name.getText().toString()+" "+ firstName + " " + lastName);
+                mobileNo.setText(mobileNo.getText() + " " + phoneNumber);
+                locationName.setText(locationName.getText().toString() + " " + location);
+                request.setText(requestList);
+                totalcost.setText(totalcost.getText().toString() + " "+totalCost);
+
+                getActivity().findViewById(R.id.layout_norequest).setVisibility(GONE);
+                getActivity().findViewById(R.id.layout_request).setVisibility(View.VISIBLE);
+
+                MaterialButton cancel = getActivity().findViewById(R.id.material_text_button_cancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String status = "Cancelled";
+                        cancelRequest(status);
+                    }
+                });
+
+                Toast.makeText(getContext(), requests.getFirstName(), Toast.LENGTH_LONG)
+                        .show();
+            }else {
+                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
+                getActivity().findViewById(R.id.layout_norequest).setVisibility(View.VISIBLE);
+            }
+
+
+        });
+    }
+
+    private void cancelRequest(String status) {
+
+        viewModel.cancelRequest(status).observe(this,requests -> {
+            if (requests!=null){
+                Toast.makeText(getActivity(), "Cancel Succesful", Toast.LENGTH_SHORT).show();
+//                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
+            }
         });
     }
 
