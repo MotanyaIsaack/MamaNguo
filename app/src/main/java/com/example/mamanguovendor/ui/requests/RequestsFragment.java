@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -88,11 +87,11 @@ public class RequestsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        RequestsFragmentViewModel viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProviders.of(this)
                 .get(RequestsFragmentViewModel.class);
 
         viewModel.getRequest().observe(this, requests -> {
-            if (requests!=null){
+            if (requests != null) {
                 String firstName = requests.getFirstName();
                 String lastName = requests.getLastName();
                 String phoneNumber = requests.getPhoneNumber();
@@ -108,21 +107,20 @@ public class RequestsFragment extends Fragment {
                 TextView request = getActivity().findViewById(R.id.textView_request_description);
                 TextView totalcost = getActivity().findViewById(R.id.textView_request_totalCost);
 
-                title.setText(firstName +" "+ title.getText().toString());
-                name.setText(name.getText().toString()+" "+ firstName + " " + lastName);
+                title.setText(firstName + " " + title.getText().toString());
+                name.setText(name.getText().toString() + " " + firstName + " " + lastName);
                 mobileNo.setText(mobileNo.getText() + " " + phoneNumber);
                 locationName.setText(locationName.getText().toString() + " " + location);
                 request.setText(requestList);
-                totalcost.setText(totalcost.getText().toString() + " "+totalCost);
+                totalcost.setText(totalcost.getText().toString() + " " + totalCost);
 
                 getActivity().findViewById(R.id.layout_norequest).setVisibility(GONE);
                 getActivity().findViewById(R.id.layout_request).setVisibility(View.VISIBLE);
 
 
-
                 Toast.makeText(getContext(), requests.getFirstName(), Toast.LENGTH_LONG)
                         .show();
-            }else {
+            } else {
                 getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
                 getActivity().findViewById(R.id.layout_norequest).setVisibility(View.VISIBLE);
             }
@@ -141,9 +139,9 @@ public class RequestsFragment extends Fragment {
 
     private void cancelRequest(String status) {
 
-        viewModel.cancelRequest(status).observe(this,requests -> {
-            if (requests!=null){
-                Toast.makeText(getActivity(), "Cancel Succesful", Toast.LENGTH_SHORT).show();
+        viewModel.cancelRequest(status).observe(this, requests -> {
+            if (requests != null) {
+                Toast.makeText(getActivity(), "Cancel Successful", Toast.LENGTH_SHORT).show();
 //                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
             }
         });
