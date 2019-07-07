@@ -1,5 +1,6 @@
 package com.example.mamanguovendor.data.network.retrofit;
 
+import com.example.mamanguovendor.data.models.CancelRequest;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.google.gson.JsonObject;
@@ -21,5 +22,5 @@ public interface RetrofitService {
     Call<Requests> request(@Header("Authorization") String authToken);
 
     @POST("cancelRequest")
-    Call<Requests> cancelRequest(@Header("Authorization") String authToken, @Body JsonObject jsonObject);
+    Call<CancelRequest> cancelRequest(@Header("Authorization") String authToken, @Body JsonObject jsonObject);
 }

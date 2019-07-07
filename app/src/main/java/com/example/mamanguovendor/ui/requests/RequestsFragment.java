@@ -118,14 +118,7 @@ public class RequestsFragment extends Fragment {
                 getActivity().findViewById(R.id.layout_norequest).setVisibility(GONE);
                 getActivity().findViewById(R.id.layout_request).setVisibility(View.VISIBLE);
 
-                MaterialButton cancel = getActivity().findViewById(R.id.material_text_button_cancel);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String status = "Cancelled";
-                        cancelRequest(status);
-                    }
-                });
+
 
                 Toast.makeText(getContext(), requests.getFirstName(), Toast.LENGTH_LONG)
                         .show();
@@ -135,6 +128,14 @@ public class RequestsFragment extends Fragment {
             }
 
 
+        });
+
+        MaterialButton cancel = getActivity().findViewById(R.id.material_text_button_cancel);
+
+        cancel.setOnClickListener(v -> {
+            String status = "Cancelled";
+//            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+            cancelRequest(status);
         });
     }
 

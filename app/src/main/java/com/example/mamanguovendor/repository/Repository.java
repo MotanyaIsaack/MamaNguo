@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.mamanguovendor.data.models.CancelRequest;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitClient;
@@ -28,6 +29,7 @@ public class Repository {
 
     private MutableLiveData<UserClass> user = new MutableLiveData<>();
     private MutableLiveData<Requests> requestsLiveData = new MutableLiveData<>();
+    private MutableLiveData<CancelRequest> requestLiveData = new MutableLiveData<>();
 
     private Repository() {
         retrofitService = RetrofitClient.getInstance().getRetrofitService();
@@ -155,29 +157,26 @@ public class Repository {
         return requestsLiveData;
     }
 
-    public LiveData<Requests> cancelRequest(String status) {
+    public LiveData<CancelRequest> cancelRequest(String status) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status",status);
 
         String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
         String authtoken = "Bearer ".concat(token);
-        Call<Requests> requestCall = retrofitService.cancelRequest(authtoken,jsonObject);
-        requestCall.enqueue(new Callback<Requests>() {
+        Call<CancelRequest> requestCall = retrofitService.cancelRequest(authtoken,jsonObject);
+        requestCall.enqueue(new Callback<CancelRequest>() {
             @Override
-            public void onResponse(Call<Requests> call, Response<Requests> response) {
+            public void onResponse(Call<CancelRequest> call, Response<CancelRequest> response) {
                 if (response.isSuccessful()){
-                    assert response.body() != null;
-                    Log.d(LOG_TAG, "onResponse: CancelResponse"+response.body().getMessage());
-
-//                    requestsLiveData.setValue(response.body());
+                    Log.d(LOG_TAG, "onResponse: " + response.body().getMessage());
                 }
             }
 
             @Override
-            public void onFailure(Call<Requests> call, Throwable t) {
+            public void onFailure(Call<CancelRequest> call, Throwable t) {
                 t.printStackTrace();
             }
         });
-        return requestsLiveData;
+        return requestLiveData;
     }
 }

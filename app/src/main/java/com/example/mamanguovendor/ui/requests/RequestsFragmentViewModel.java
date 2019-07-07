@@ -3,6 +3,7 @@ package com.example.mamanguovendor.ui.requests;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mamanguovendor.data.models.CancelRequest;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.repository.Repository;
 
@@ -18,7 +19,7 @@ public class RequestsFragmentViewModel extends ViewModel {
         return repository.request();
     }
 
-    public LiveData<Requests> cancelRequest(String status){
+    public LiveData<CancelRequest> cancelRequest(String status){
         return repository.cancelRequest(status);
     }
 
