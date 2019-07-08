@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mamanguovendor.R;
-import com.example.mamanguovendor.ui.components.Navigation_activity;
+import com.example.mamanguovendor.ui.components.NavigationActivity;
 import com.example.mamanguovendor.util.PreferenceUtils;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
     private void launchLoginScreen() {
         String token = PreferenceUtils.getUserToken(this);
         if (token != null) {
-            Intent intent = new Intent(this, Navigation_activity.class);
+            Intent intent = new Intent(this, NavigationActivity.class);
             startActivity(intent);
         } else {
             setContentView(R.layout.activity_splash);

@@ -1,6 +1,7 @@
 package com.example.mamanguovendor.repository;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,10 +10,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.mamanguovendor.data.models.CancelRequest;
 import com.example.mamanguovendor.data.models.CompleteRequest;
+import com.example.mamanguovendor.data.models.MamaNguo;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitClient;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitService;
+import com.example.mamanguovendor.ui.auth.LoginActivity;
 import com.example.mamanguovendor.util.ApplicationContextProvider;
 import com.example.mamanguovendor.util.PreferenceUtils;
 import com.google.gson.JsonObject;
@@ -29,9 +32,11 @@ public class Repository {
     private final RetrofitService retrofitService;
 
     private MutableLiveData<UserClass> user = new MutableLiveData<>();
+    private MutableLiveData<UserClass> logoutUser = new MutableLiveData<>();
     private MutableLiveData<Requests> requestsLiveData = new MutableLiveData<>();
     private MutableLiveData<CompleteRequest> completeLiveData = new MutableLiveData<>();
     private MutableLiveData<CancelRequest> requestLiveData = new MutableLiveData<>();
+    private MutableLiveData<MamaNguo> mamanguo = new MutableLiveData<>();
 
     private Repository() {
         retrofitService = RetrofitClient.getInstance().getRetrofitService();
@@ -44,6 +49,8 @@ public class Repository {
         }
         return instance;
     }
+
+
 
     public LiveData<UserClass> login(String mobileNo, String password) {
         JsonObject jsonObject = new JsonObject();
@@ -159,6 +166,37 @@ public class Repository {
         return requestsLiveData;
     }
 
+    public LiveData<MamaNguo> getMamaNguo(){
+        String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
+        String authtoken = "Bearer ".concat(token);
+
+        Call<MamaNguo> mamaNguoCall = retrofitService.getMamaNguo(authtoken);
+        mamaNguoCall.enqueue(new Callback<MamaNguo>() {
+            @Override
+            public void onResponse(Call<MamaNguo> call, Response<MamaNguo> response) {
+                if (response.isSuccessful()){
+                    assert response.body()!=null;
+                    mamanguo.setValue(response.body());
+                    Log.d(LOG_TAG, "onResponse: "+response.body().getFirstName());
+                }else{
+                    mamanguo.setValue(null);
+                    try {
+                        Log.d(LOG_TAG, "eRROR: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MamaNguo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return mamanguo;
+    }
+
     public LiveData<CancelRequest> cancelRequest(String status) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status",status);
@@ -205,5 +243,26 @@ public class Repository {
 
 
         return completeLiveData;
+    }
+
+    public LiveData<UserClass> logout(){
+        String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
+        String authtoken = "Bearer ".concat(token);
+
+        Call<UserClass> logoutCall = retrofitService.logout(authtoken);
+        logoutCall.enqueue(new Callback<UserClass>() {
+            @Override
+            public void onResponse(Call<UserClass> call, Response<UserClass> response) {
+                PreferenceUtils.setUserToken(ApplicationContextProvider.getContext(), null);
+                Log.d(LOG_TAG, "onResponse: Response "+ response.body().getResponse());
+                logoutUser.setValue(null);
+            }
+
+            @Override
+            public void onFailure(Call<UserClass> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return null;
     }
 }
