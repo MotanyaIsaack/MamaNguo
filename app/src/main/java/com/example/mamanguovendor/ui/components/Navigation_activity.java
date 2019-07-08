@@ -94,6 +94,7 @@ public class Navigation_activity extends AppCompatActivity implements HistoryFra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
+            
             return true;
         }
 

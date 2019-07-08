@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mamanguovendor.data.models.CancelRequest;
+import com.example.mamanguovendor.data.models.CompleteRequest;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.data.models.UserClass;
 import com.example.mamanguovendor.data.network.retrofit.RetrofitClient;
@@ -29,6 +30,7 @@ public class Repository {
 
     private MutableLiveData<UserClass> user = new MutableLiveData<>();
     private MutableLiveData<Requests> requestsLiveData = new MutableLiveData<>();
+    private MutableLiveData<CompleteRequest> completeLiveData = new MutableLiveData<>();
     private MutableLiveData<CancelRequest> requestLiveData = new MutableLiveData<>();
 
     private Repository() {
@@ -169,6 +171,7 @@ public class Repository {
             public void onResponse(Call<CancelRequest> call, Response<CancelRequest> response) {
                 if (response.isSuccessful()){
                     Log.d(LOG_TAG, "onResponse: " + response.body().getMessage());
+                    requestLiveData.setValue(response.body());
                 }
             }
 
@@ -178,5 +181,29 @@ public class Repository {
             }
         });
         return requestLiveData;
+    }
+
+    public LiveData<CompleteRequest> completeRequest(String status){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status",status);
+
+        String token = PreferenceUtils.getUserToken(ApplicationContextProvider.getContext());
+        String authtoken = "Bearer ".concat(token);
+        Call<CompleteRequest> requestsCall = retrofitService.completeRequest(authtoken,jsonObject);
+        requestsCall.enqueue(new Callback<CompleteRequest>() {
+            @Override
+            public void onResponse(Call<CompleteRequest> call, Response<CompleteRequest> response) {
+                Log.d(LOG_TAG, "onResponse: " + response.body().getMessage());
+                completeLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CompleteRequest> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
+        return completeLiveData;
     }
 }

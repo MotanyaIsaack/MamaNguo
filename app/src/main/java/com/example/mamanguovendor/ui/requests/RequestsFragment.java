@@ -11,9 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mamanguovendor.R;
+import com.example.mamanguovendor.data.models.CompleteRequest;
+import com.example.mamanguovendor.data.models.Requests;
 import com.google.android.material.button.MaterialButton;
 
 import static android.view.View.GONE;
@@ -132,8 +135,35 @@ public class RequestsFragment extends Fragment {
 
         cancel.setOnClickListener(v -> {
             String status = "Cancelled";
-//            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
             cancelRequest(status);
+        });
+
+        MaterialButton accept = getActivity().findViewById(R.id.material_text_button_accept);
+        MaterialButton complete = getActivity().findViewById(R.id.material_text_button_complete);
+
+        accept.setOnClickListener(v -> {
+            cancel.setVisibility(GONE);
+            accept.setVisibility(GONE);
+            complete.setVisibility(View.VISIBLE);
+        });
+
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String status = "Completed";
+                completeRequest(status);
+            }
+        });
+    }
+
+    private void completeRequest(String status) {
+        viewModel.completeRequests(status).observe(this, completeRequest -> {
+            if (completeRequest!=null){
+                Toast.makeText(getActivity(), "Complete Successful", Toast.LENGTH_SHORT).show();
+                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
+                getActivity().findViewById(R.id.layout_norequest).setVisibility(View.VISIBLE);
+            }
+
         });
     }
 
@@ -142,7 +172,8 @@ public class RequestsFragment extends Fragment {
         viewModel.cancelRequest(status).observe(this, requests -> {
             if (requests != null) {
                 Toast.makeText(getActivity(), "Cancel Successful", Toast.LENGTH_SHORT).show();
-//                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
+                getActivity().findViewById(R.id.layout_request).setVisibility(GONE);
+                getActivity().findViewById(R.id.layout_norequest).setVisibility(View.VISIBLE);
             }
         });
     }
