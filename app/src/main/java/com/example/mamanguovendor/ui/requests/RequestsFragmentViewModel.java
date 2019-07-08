@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mamanguovendor.data.models.CancelRequest;
+import com.example.mamanguovendor.data.models.CompleteRequest;
 import com.example.mamanguovendor.data.models.Requests;
 import com.example.mamanguovendor.repository.Repository;
 
@@ -21,6 +22,10 @@ public class RequestsFragmentViewModel extends ViewModel {
 
     public LiveData<CancelRequest> cancelRequest(String status){
         return repository.cancelRequest(status);
+    }
+
+    public LiveData<CompleteRequest> completeRequests(String status){
+        return repository.completeRequest(status);
     }
 
 }

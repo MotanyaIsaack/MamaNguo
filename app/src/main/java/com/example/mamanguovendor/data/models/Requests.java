@@ -58,4 +58,12 @@ public class Requests {
     public String getStatus() {
         return status;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
