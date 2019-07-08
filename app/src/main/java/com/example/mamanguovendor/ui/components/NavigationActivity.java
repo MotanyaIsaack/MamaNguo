@@ -5,21 +5,28 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.mamanguovendor.R;
+import com.example.mamanguovendor.ui.auth.LoginActivity;
 import com.example.mamanguovendor.ui.history.HistoryFragment;
 import com.example.mamanguovendor.ui.profile.ProfileFragment;
+import com.example.mamanguovendor.ui.profile.ProfileFragmentViewModel;
 import com.example.mamanguovendor.ui.requests.RequestsFragment;
+import com.example.mamanguovendor.util.ApplicationContextProvider;
+import com.example.mamanguovendor.util.PreferenceUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Navigation_activity extends AppCompatActivity implements HistoryFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,RequestsFragment.OnFragmentInteractionListener
+public class NavigationActivity extends AppCompatActivity implements HistoryFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,RequestsFragment.OnFragmentInteractionListener
 {
     private ActionBar toolbar;
+    private NavigationActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +101,16 @@ public class Navigation_activity extends AppCompatActivity implements HistoryFra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
-            
+//            viewModel = ViewModelProviders.of(this).get(NavigationActivityViewModel.class);
+//            viewModel.logout().observe(this,userClass -> {
+//                if (userClass==null){
+//                    Intent intent = new Intent(NavigationActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
+            PreferenceUtils.setUserToken(ApplicationContextProvider.getContext(), null);
+            Intent intent = new Intent(NavigationActivity.this, LoginActivity.class);
+            startActivity(intent);
             return true;
         }
 

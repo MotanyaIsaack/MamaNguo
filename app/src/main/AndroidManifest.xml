@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.components.Navigation_activity"
+        <activity android:name=".ui.components.NavigationActivity"
             android:theme="@style/ActionBarTheme">
 
         </activity>

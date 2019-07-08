@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mamanguovendor.R;
-import com.example.mamanguovendor.ui.components.Navigation_activity;
+import com.example.mamanguovendor.ui.components.NavigationActivity;
 import com.example.mamanguovendor.util.FormValidators;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         .show();
             }else {
                 Log.d(LOG_TAG, userClass.getToken());
-                Intent intent = new Intent(LoginActivity.this,Navigation_activity.class);
+                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                 startActivity(intent);
             }
         });

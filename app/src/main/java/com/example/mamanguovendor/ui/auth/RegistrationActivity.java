@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.mamanguovendor.R;
-import com.example.mamanguovendor.ui.components.Navigation_activity;
+import com.example.mamanguovendor.ui.components.NavigationActivity;
 import com.example.mamanguovendor.util.FormValidators;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -101,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (userClass!=null){
                     Log.d(TAG, "onChanged: Success"+userClass.getToken());
-                    Intent intent = new Intent(RegistrationActivity.this,Navigation_activity.class);
+                    Intent intent = new Intent(RegistrationActivity.this, NavigationActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(RegistrationActivity.this,

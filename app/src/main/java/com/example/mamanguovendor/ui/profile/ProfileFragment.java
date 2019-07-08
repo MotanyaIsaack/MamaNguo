@@ -4,13 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.mamanguovendor.R;
+import com.example.mamanguovendor.ui.requests.RequestsFragmentViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +25,9 @@ import com.example.mamanguovendor.R;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    private ProfileFragmentViewModel viewModel;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,6 +75,38 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        viewModel = ViewModelProviders.of(this)
+                .get(ProfileFragmentViewModel.class);
+
+        viewModel.getMamaNguo().observe(this, mamaNguo -> {
+            if (mamaNguo != null){
+                String firstName = mamaNguo.getFirstName();
+                String lastName = mamaNguo.getLastName();
+
+                String fullName = firstName+" "+lastName;
+                String email = mamaNguo.getEmail();
+                String mobileNo = mamaNguo.getPhoneNumber();
+                String location = mamaNguo.getLocation();
+
+                TextView fullname = getActivity().findViewById(R.id.tvFullName);
+                TextView mobileno = getActivity().findViewById(R.id.tvMobileNo);
+                TextView Location = getActivity().findViewById(R.id.tvLocation);
+                TextView Email = getActivity().findViewById(R.id.tvEmail);
+
+                fullname.setText(fullName);
+                mobileno.setText(mobileNo);
+                Location.setText(location);
+                Email.setText(email);
+
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
