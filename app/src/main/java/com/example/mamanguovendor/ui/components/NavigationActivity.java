@@ -56,11 +56,11 @@ public class NavigationActivity extends AppCompatActivity implements HistoryFrag
                     fragment = new RequestsFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.navigation_history:
-                    toolbar.setTitle("History");
-                    fragment = new HistoryFragment();
-                    loadFragment(fragment);
-                    return true;
+//                case R.id.navigation_history:
+//                    toolbar.setTitle("History");
+//                    fragment = new HistoryFragment();
+//                    loadFragment(fragment);
+//                    return true;
                 case R.id.navigation_profile:
                     toolbar.setTitle("Profile");
                     fragment = new ProfileFragment();
